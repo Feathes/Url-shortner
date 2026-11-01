@@ -5,26 +5,26 @@ import dns from 'dns/promises'
 
 
 const RESERVED = ['api', 'auth', 'url', 'login', 'register', 'logout', 'admin']
- 
+
 const normalizeUrl = (input) => {
     let value = String(input || '').trim()
 
     // if they have no https then add
     if (!/^https?:\/\//i.test(value)) value = 'https://' + value
- 
+
     const url = new URL(value)   // showing the error
- 
+
     if (!['http:', 'https:'].includes(url.protocol)) throw new Error('bad protocol')
     if (!url.hostname.includes('.')) throw new Error('bad host')  // they fond it
- 
+
     return url.href
 }
- 
+
 const createUrl = async (req, res) => {
     try {
         // 1. Body se dono values nikalo (customUrl pehle define hi nahi tha)
         const { longUrl: rawUrl, customUrl } = req.body
- 
+
         // 2. Format check
         let longUrl
         try {
@@ -39,10 +39,10 @@ const createUrl = async (req, res) => {
         } catch {
             return res.status(400).json({ error: 'This website do not exist' })
         }
- 
+
         // 4. Custom alias check
         const alias = String(customUrl || '').trim()
- 
+
         if (alias && !/^[a-zA-Z0-9_-]{3,30}$/.test(alias)) {
             return res.status(400).json({
                 error: 'Custom name 3 se 30 characters ka ho, sirf letters, numbers, - aur _ allowed hain'
@@ -51,20 +51,20 @@ const createUrl = async (req, res) => {
         if (RESERVED.includes(alias.toLowerCase())) {
             return res.status(400).json({ error: 'Ye could not use this custom name try another' })
         }
- 
+
         const shortcode = alias || nanoid(6)
- 
+
         if (alias && (await Url.exists({ shortcode }))) {
             return res.status(409).json({ error: 'Ye custom shortcode already used hai' })
         }
- 
+
         // 5. Save (guest ho to user null)
         const result = await Url.create({
             longUrl,
             shortcode,
             user: req.user?.id || null,
         })
- 
+
         return res.json({
             shortUrl: `${process.env.BASE_URL}/url/${shortcode}`,
             _id: result._id,
@@ -80,8 +80,8 @@ const createUrl = async (req, res) => {
         return res.status(500).json({ error: 'Server error' })
     }
 }
- 
- 
+
+
 
 
 const fetchUrl = async (req, res) => {

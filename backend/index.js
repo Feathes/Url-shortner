@@ -6,7 +6,7 @@ import router from "./src/routes/Urls.routes.js"
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path"
-import {fileURLToPath} from "url";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,8 +36,8 @@ app.use("/auth", authRouter)
 
 const dist = path.join(__dirname, '../frontend/dist')
 
-  app.use(express.static(dist))
-  app.get(/.*/, (req, res) => res.sendFile(path.join(dist, 'index.html')))
+app.use(express.static(dist))
+app.get(/.*/, (req, res) => res.sendFile(path.join(dist, 'index.html')))
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)

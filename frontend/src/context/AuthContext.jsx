@@ -9,14 +9,17 @@ export const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(()=>{
-      getProfile().then((res)=>{
-        setUser(res.user)
-        setIsAuthenticated(true)
-      }).catch((err)=>{
-        console.log("error in getting profile : ",err)
-      })
-    },[user])
+    useEffect(() => {
+        getProfile().then((res) => {
+            if (res) {
+                setUser(res.user || res);
+                setIsAuthenticated(true);
+            }
+        }).catch((err) => {
+            setUser(null);
+            setIsAuthenticated(false);
+        });
+    }, []);
 
 
     return(
