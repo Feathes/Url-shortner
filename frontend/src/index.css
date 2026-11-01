@@ -1,0 +1,371 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap');
+
+:root {
+  --text: #0b0e1a;
+  --background: #f3f6fa;
+  --primary: #5773ba;
+  --secondary: #d394a1;
+  --accent: #c6a575;
+
+  /* palette se bahar: sirf error message ke liye, taaki red saaf dikhe */
+  --error: #b23a55;
+
+  /* palette ke hi halke/gehre versions */
+  --surface: #ffffff;
+  --muted: rgba(11, 14, 26, 0.6);
+  --line: rgba(11, 14, 26, 0.1);
+  --primary-dark: #435b9c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 20px 80px;
+}
+
+.title {
+  margin: 0 0 6px;
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0 0 32px;
+  color: var(--muted);
+}
+
+/* ---------- Form ---------- */
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--text);
+  background: var(--background);
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+
+.input::placeholder {
+  color: var(--muted);
+}
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(87, 115, 186, 0.25);
+}
+
+.input.input-error {
+  border-color: var(--error);
+}
+
+.btn {
+  padding: 12px 22px;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.error-text {
+  margin: 10px 2px 0;
+  color: var(--error);
+  font-size: 0.925rem;
+  font-weight: 500;
+}
+
+/* ---------- Abhi bana hua link ---------- */
+
+/* ===== App.css mein ".result {" wali jagah se le kar file ke END tak ye poora block replace karo ===== */
+
+/* ---------- Abhi bana hua link (result) ---------- */
+
+/* Desktop: ek row mein  [link | QR | Copy]  (QR na ho to bhi chalta hai) */
+.result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: "link qr copy";
+  align-items: center;
+  column-gap: 14px;
+  row-gap: 12px;
+  margin-top: 20px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+}
+
+.result>.result-link {
+  grid-area: link;
+}
+
+.result>.qr-wrap {
+  grid-area: qr;
+}
+
+.result>.btn-copy {
+  grid-area: copy;
+}
+
+.result-link {
+  min-width: 0;
+  color: var(--primary);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  /* bahut lamba link line tod ke dikhega, bahar nahi niklega */
+  text-decoration: none;
+}
+
+.result-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Copy button (result aur history dono mein) ---------- */
+
+.btn-copy {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-copy:hover {
+  background: rgba(198, 165, 117, 0.2);
+}
+
+.btn-copy:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ---------- History ---------- */
+
+.history-title {
+  margin: 44px 0 14px;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.empty {
+  padding: 24px;
+  color: var(--muted);
+  text-align: center;
+  border: 1px dashed var(--secondary);
+  border-radius: 12px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Desktop: ek row mein  [links | QR | Copy] */
+.history-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: "links qr copy";
+  align-items: center;
+  column-gap: 14px;
+  row-gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.history-item>.history-links {
+  grid-area: links;
+}
+
+.history-item>.qr-wrap {
+  grid-area: qr;
+}
+
+.history-item>.btn-copy {
+  grid-area: copy;
+}
+
+.history-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  /* iske bina lamba link card se bahar nikal jata hai */
+}
+
+/* Dono links ek line mein, lamba ho to ... se kat jaye */
+.short-link,
+.long-link {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.short-link {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.short-link:hover {
+  text-decoration: underline;
+}
+
+.long-link {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.long-link:hover {
+  color: var(--text);
+}
+
+/* ---------- QR (result aur history dono mein) ---------- */
+
+.qr-wrap {
+  position: relative;
+  padding: 4px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  line-height: 0;
+  transform-origin: right center;
+  transition: transform 0.2s ease;
+}
+
+.qr-wrap svg {
+  display: block;
+}
+
+/* Hover se bada hona sirf mouse wale devices par (phone par hover atak jata hai) */
+@media (hover: hover) and (pointer: fine) {
+  .qr-wrap {
+    cursor: zoom-in;
+  }
+
+  .qr-wrap:hover {
+    transform: scale(3);
+    z-index: 10;
+    box-shadow: 0 8px 24px rgba(11, 14, 26, 0.2);
+  }
+}
+
+/* ---------- Tablet / chhoti screen ---------- */
+
+@media (max-width: 760px) {
+
+  .result,
+  .history-item {
+    column-gap: 10px;
+  }
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 600px) {
+  .app {
+    padding-top: 36px;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+  }
+
+  /* Result: upar [link | QR], neeche poori width ka Copy button */
+  .result {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "link qr"
+      "copy copy";
+    padding: 14px;
+  }
+
+  /* History: wahi layout */
+  .history-title {
+    margin-top: 32px;
+  }
+
+  .history-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "links qr"
+      "copy  copy";
+    padding: 12px 14px;
+  }
+
+  .result>.btn-copy,
+  .history-item>.btn-copy {
+    width: 100%;
+    padding: 10px 14px;
+    /* ungli se dabane layak size */
+  }
+}
+
+/* Bahut chhoti screen (~360px) */
+@media (max-width: 380px) {
+
+  .result,
+  .history-item {
+    padding: 10px 12px;
+  }
+
+  .short-link {
+    font-size: 0.95rem;
+  }
+}

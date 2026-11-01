@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "install-all": "npm install --prefix backend && npm install --include=dev --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "start": "npm run start --prefix backend",
+   "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\""
+    
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}
