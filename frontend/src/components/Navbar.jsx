@@ -9,6 +9,8 @@ const Navbar = () => {
 
     const onLogout = async () => {
         await handleLogout()
+        window.alert("Logout successful")
+        window.location.reload() // Refresh the page to update the UI
         navigate("/")
     }
 
