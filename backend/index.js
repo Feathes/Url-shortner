@@ -34,7 +34,7 @@ app.use("/auth", authRouter)
 
 
 
-const dist = path.join(__dirname, '../../frontend/dist')
+const dist = path.join(__dirname, '../frontend/dist')
 
   app.use(express.static(dist))
   app.get(/.*/, (req, res) => res.sendFile(path.join(dist, 'index.html')))
